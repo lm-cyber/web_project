@@ -5,6 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
+admin_config.json
 
 # Distribution / packaging
 .Python
