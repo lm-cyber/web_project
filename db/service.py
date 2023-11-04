@@ -9,7 +9,24 @@ async def get_all_product(session: Session) -> list[ProductModel]:
     return result.scalars().all()
 
 
-async def add_product(session: Session, name: str):
+async def add_product(session: Session,name: str) -> ProductModel:
     new_product = ProductOrm(name=name)
     session.add(new_product)
     return new_product
+
+
+async def delete_product(session: Session, id: int):
+    session.query(ProductOrm).filter(ProductOrm.id == id).delete()
+    session.commit()
+
+
+async def update_product(session: Session, id: int, name: str):
+    product = session.query(ProductOrm).filter(ProductOrm.id == id).first()
+    if not product:
+        return
+    product.name = name
+    session.commit()
+    return product
+
+async def get_product(session: Session, id: int) -> ProductModel:
+    return session.execute(select(ProductOrm).where(ProductOrm.id == id)).scalar_one_or_none()
