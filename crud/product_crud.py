@@ -14,11 +14,8 @@ class ProductCrud(Crud):
 
 
     async def get_all(self) -> list[ProductModel]:
-        result = self.session.execute(select(ProductOrm).order_by(ProductOrm.id).limit(20))
-        return result.scalars().all()
+       pass # TODO
+
 
     async def add_product(self, model) -> ProductModel:
-        pass
-        # new_product = ProductOrm(name=name)
-        # session.add(new_product)
-        # return new_product
+        pass # TODO

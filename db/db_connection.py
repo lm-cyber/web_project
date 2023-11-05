@@ -1,8 +1,10 @@
+from typing import Generator
+
 from sqlalchemy import Engine
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
-from db.models import Base
+from models.models import Base
 
 engine: Engine = create_engine("postgresql+psycopg2://docker:docker@localhost/docker")
 
@@ -15,5 +17,9 @@ def init_models():
 session = Session(bind=engine)
 
 
-def get_session() -> Session:
-    return session
+
+def get_session() -> Generator:
+    try:
+        yield session
+    finally:
+        session.close()
