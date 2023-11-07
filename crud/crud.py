@@ -1,15 +1,16 @@
+from typing import Sequence
+
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
-from db import get_session, ProductModel, ProductOrm
-from sqlalchemy import select
+from db import get_session
 
 
 class Crud:
     def __init__(self, session: Session = Depends(get_session)):
         self._session = session
 
-    async def get_all(self) -> list:
+    async def get_all(self) -> Sequence:
         pass
 
     async def get(self, id):

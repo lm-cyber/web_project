@@ -4,7 +4,7 @@ from sqlalchemy import Engine
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
-from models.models import Base
+from shema.base import Base
 
 engine: Engine = create_engine("postgresql+psycopg2://docker:docker@localhost/docker")
 
