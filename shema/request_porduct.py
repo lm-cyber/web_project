@@ -1,5 +1,5 @@
 from .base import Base
-from sqlalchemy import Column, Integer, String, Sequence, ForeignKey, Text
+from sqlalchemy import Column, Integer, String, Sequence, ForeignKey, Text, DateTime
 from sqlalchemy.orm import relationship
 
 
@@ -12,5 +12,6 @@ class RequestProductOrm(Base):
     patronymic = Column(String(64))
     company = Column(String(128))
     email = Column(String(128))
-    under_request = Column(Text(1024))
-    product_in_request = relationship("ProductInRequestOrm", back_populates="request_product")
+    under_request = Column(Text)
+    datetime = Column(DateTime)
+    product_in_request = relationship("ProductInRequestOrm", backref="request_product")

@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from db import service
 from db import get_session
-from models import NewImage, Image, ImageOrm, NewImageWithoutBinary
+from models import ImageModel
 from fastapi import File
 image_router = APIRouter()
 
@@ -15,13 +15,13 @@ async def get_image(session: Session = Depends(get_session), id: int = None):
         image = await service.get_image(session, id)
         with open(image.image, 'rb') as f:
             contents = f.read()
-            return Image(id=image.id, image=image.contents)
+            return ImageModel(id=image.id, image=image.contents)
     images = await service.get_image(session)
     images_data =[]
     for image in images:
         with open(image.image, 'rb') as f:
             contents = f.read()
-        images_data.append(Image(id=image.id, image=contents))
+        images_data.append(ImageModel(id=image.id, image=contents))
     return images_data
 
 

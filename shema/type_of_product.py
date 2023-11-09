@@ -10,4 +10,4 @@ class TypeOfProductOrm(Base):
 
     id = Column(Integer, Sequence('type_of_product_id_seq'), primary_key=True)
     name = Column(String(63), unique=True)
-    product = relationship("ProductOrm", back_populates="type_of_product")
+    product = relationship("ProductOrm", backref="type_of_product")
