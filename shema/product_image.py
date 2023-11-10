@@ -6,8 +6,8 @@ from sqlalchemy import Column, Integer, LargeBinary, Sequence, ForeignKey
 
 
 class ProductImageOrm(Base):
-    __tablename__ = 'product_image'
+    __tablename__ = "product_image"
 
-    id = Column(Integer, Sequence('product_image_id_seq'), primary_key=True)
+    id = Column(Integer, Sequence("product_image_id_seq"), primary_key=True)
     product_id = Column(Integer, ForeignKey("product.id"), nullable=False)
     binary_image = Column(LargeBinary)

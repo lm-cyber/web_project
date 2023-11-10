@@ -4,8 +4,6 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 
-
-
 #
 #
 # async def add_image(session: Session, id, file_bytes):

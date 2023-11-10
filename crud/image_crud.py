@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from pydantic import parse_obj_as
 from sqlalchemy import select
 from shema import ProductImageOrm
-from models import NewImageModel, ImageModel,ImageProductId
+from models import NewImageModel, ImageModel, ImageProductId
 
 
 async def get_all(session: Session) -> Sequence[ImageModel]:

@@ -1,7 +1,7 @@
 from admin_setup import AdminDeAndSerializing
 
 
-class Admin_():
+class Admin_:
     def __init__(self, name: str, password: str):
         self.name = name
         self.password = password

@@ -14,7 +14,7 @@ async def get_all(session: Session) -> Sequence[TypeOfProductModel]:
     return parse_obj_as(Sequence[TypeOfProductModel], result)
 
 
-async def get(session: Session, id) -> TypeOfProductModel| None:
+async def get(session: Session, id) -> TypeOfProductModel | None:
     result = session.execute(select(TypeOfProductOrm).where(TypeOfProductOrm.id == id)).scalar_one_or_none()
     if result:
         return parse_obj_as(TypeOfProductModel, result)

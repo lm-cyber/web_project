@@ -4,9 +4,9 @@ from sqlalchemy.orm import relationship
 
 
 class RequestProductOrm(Base):
-    __tablename__ = 'request_product'
+    __tablename__ = "request_product"
 
-    id = Column(Integer, Sequence('request_id_seq'), primary_key=True)
+    id = Column(Integer, Sequence("request_id_seq"), primary_key=True)
     name = Column(String(64))
     surname = Column(String(64))
     patronymic = Column(String(64))

@@ -62,4 +62,4 @@ indent-width = 4
 target-version = "py311"
 
 [tool.ruff.lint]
-ignore = []
+ignore = ["F401"]

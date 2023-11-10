@@ -16,8 +16,6 @@ def init_models():
     Base.metadata.create_all(engine)
 
 
-
-
 def get_session() -> Generator:
     session = SessionLocal()
 
