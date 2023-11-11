@@ -10,4 +10,4 @@ class ProductImageOrm(Base):
 
     id = Column(Integer, Sequence("product_image_id_seq"), primary_key=True)
     product_id = Column(Integer, ForeignKey("product.id"), nullable=False)
-    binary_image = Column(LargeBinary)
+    image = Column(LargeBinary)

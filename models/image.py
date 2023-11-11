@@ -5,11 +5,14 @@ from pydantic import BaseModel, ConfigDict, constr, conint
 
 class NewImageModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    proudct_id: int
+    product_id: int
     image: bytes
 
 
-class ImageModel(NewImageModel):
+class ImageModel(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    product_id: int
+    image: bytes
     id: int
 
 
