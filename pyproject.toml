@@ -10,13 +10,8 @@ python = "^3.11"
 fastapi = "^0.103.1"
 pedantic = "^1.14.6"
 sqlalchemy = "^2.0.20"
-redis = "^5.0.0"
 uvicorn = "^0.23.2"
 psycopg2 = "^2.9.7"
-typer = "^0.9.0"
-python-jose = "^3.3.0"
-celery = "^5.3.4"
-passlib = "^1.7.4"
 python-multipart = "^0.0.6"
 
 
@@ -24,6 +19,7 @@ python-multipart = "^0.0.6"
 pytest = "^7.4.2"
 ruff = "^0.1.5"
 swagger-ui = "^0.1.2"
+deptry = "^0.12.0"
 
 [build-system]
 requires = ["poetry-core"]

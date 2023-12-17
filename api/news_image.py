@@ -11,8 +11,8 @@ news_image_router = APIRouter(tags=["news_image"])
 
 
 @news_image_router.post("/news_image/")
-async def add_image(product_id: int, file_bytes: bytes = File(), session: Session = Depends(get_session)):
-    return await news_image_crud.create(session, product_id, file_bytes)
+async def add_image(news_id: int, file_bytes: bytes = File(), session: Session = Depends(get_session)):
+    return await news_image_crud.create(session, news_id, file_bytes)
 
 
 @news_image_router.delete("/news_image/{id}")
@@ -32,5 +32,5 @@ async def get_image(id: int = None, session: Session = Depends(get_session)):
 
 
 @news_image_router.get("/image_id_by_news_id/{id}")
-async def get_image_id_by_product_id(id: int, session: Session = Depends(get_session)):
-    return await news_image_crud.get_image_id_by_product_id(session, id)
+async def get_image_id_by_news_id(id: int, session: Session = Depends(get_session)):
+    return await news_image_crud.get_image_id_by_news_id(session, id)

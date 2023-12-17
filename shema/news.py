@@ -1,7 +1,4 @@
-from typing import List, Optional
-
-from sqlalchemy import Column, Integer, String, Sequence, ForeignKey, Text
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, Sequence, Text
 
 from .base import Base
 

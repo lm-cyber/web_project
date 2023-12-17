@@ -8,13 +8,14 @@ from models import TypeOfProductModel, NewTypeOfProductModel
 type_of_product_router = APIRouter(tags=["type_of_product"])
 
 
-@type_of_product_router.get("/type_of_product/{id}", response_model=list[TypeOfProductModel] | TypeOfProductModel)
-async def get_type_of_products(id: int = None, session: Session = Depends(get_session)):
-    if id:
-        return await type_of_product_crud.get(session, id)
+@type_of_product_router.get("/type_of_product/{id}", response_model=TypeOfProductModel)
+async def get_type_of_product(id: int = None, session: Session = Depends(get_session)):
+    return await type_of_product_crud.get(session, id)
+
+
+@type_of_product_router.get("/type_of_product/", response_model=list[TypeOfProductModel])
+async def get_type_of_products(session: Session = Depends(get_session)):
     return await type_of_product_crud.get_all(session)
-
-
 @type_of_product_router.post("/type_of_product/", response_model=TypeOfProductModel)
 async def add_type_of_product(type_of_product: NewTypeOfProductModel, session: Session = Depends(get_session)):
     return await type_of_product_crud.create(session, type_of_product)

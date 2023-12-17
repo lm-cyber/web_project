@@ -25,7 +25,7 @@ async def delete(session: Session, id):
 
 
 async def create(session: Session, model: NewNewsModel) -> NewsModel:
-    new_product = NewsOrm(name=model.name, type_of_product_id=model.type_of_product_id, description=model.description)
+    new_product = NewsOrm(name=model.name, description=model.description)
     session.add(new_product)
     session.commit()
     return parse_obj_as(NewsModel, new_product)

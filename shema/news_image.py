@@ -9,5 +9,5 @@ class NewsImageOrm(Base):
     __tablename__ = "news_image"
 
     id = Column(Integer, Sequence("news_image_id_seq"), primary_key=True)
-    product_id = Column(Integer, ForeignKey("news.id"), nullable=False)
+    news_id = Column(Integer, ForeignKey("news.id"), nullable=False)
     image = Column(LargeBinary)

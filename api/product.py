@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import Depends, APIRouter
 
 from sqlalchemy.orm import Session
@@ -9,10 +11,12 @@ from crud import product_crud
 product_router = APIRouter(tags=["product"])
 
 
-@product_router.get("/product/{id}", response_model=list[ProductModel] | ProductModel)
-async def get_products(id: int = None, session: Session = Depends(get_session)):
-    if id:
-        return await product_crud.get(session, id)
+@product_router.get("/product/{id}", response_model=ProductModel)
+async def get_product(id: int, session: Session = Depends(get_session)):
+    return await product_crud.get(session, id)
+
+@product_router.get("/product/", response_model=list[ProductModel])
+async def get_products(session: Session = Depends(get_session)):
     return await product_crud.get_all(session)
 
 
