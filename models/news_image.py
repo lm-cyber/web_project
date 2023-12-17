@@ -1,21 +1,19 @@
-from typing import List, Optional
-
-from pydantic import BaseModel, ConfigDict, constr, conint
+from pydantic import BaseModel, ConfigDict
 
 
-class NewImageModel(BaseModel):
+class NewNewsImageModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     product_id: int
-    image: bytes
+    id: int
 
 
-class ImageModel(BaseModel):
+class NewsImageModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     product_id: int
     image: bytes
     id: int
 
 
-class ImageProductId(BaseModel):
+class ImageByNewsId(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     product_id: int

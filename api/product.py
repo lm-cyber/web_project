@@ -2,15 +2,14 @@ from fastapi import Depends, APIRouter
 
 from sqlalchemy.orm import Session
 
-from db import service
 from db import get_session
 from models import ProductModel, NewProductModel
 from crud import product_crud
 
-product_router = APIRouter()
+product_router = APIRouter(tags=["product"])
 
 
-@product_router.get("/product/", response_model=list[ProductModel] | ProductModel)
+@product_router.get("/product/{id}", response_model=list[ProductModel] | ProductModel)
 async def get_products(id: int = None, session: Session = Depends(get_session)):
     if id:
         return await product_crud.get(session, id)
@@ -22,7 +21,7 @@ async def add_product(product: NewProductModel, session: Session = Depends(get_s
     return await product_crud.create(session, product)
 
 
-@product_router.delete("/product/")
+@product_router.delete("/product/{id}")
 async def delete_product(id: int, session: Session = Depends(get_session)):
     await product_crud.delete(session, id)
 

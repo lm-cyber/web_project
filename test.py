@@ -1,7 +1,6 @@
 from sqlalchemy import select
 
 from db import get_session, ProductOrm
-from db import service
 
 session = get_session()
 # new_product = ProductOrm(name='asdddd')

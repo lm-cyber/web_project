@@ -6,11 +6,9 @@ from sqlalchemy.orm import relationship
 from .base import Base
 
 
-class ProductOrm(Base):
-    __tablename__ = "product"
+class NewsOrm(Base):
+    __tablename__ = "news"
 
-    id = Column(Integer, Sequence("product_id_seq"), primary_key=True)
+    id = Column(Integer, Sequence("news_id_seq"), primary_key=True)
     name = Column(String(128), nullable=False)
     description = Column(Text)
-
-    type_of_product_id = Column(Integer, ForeignKey("type_of_product.id"), nullable=False)
