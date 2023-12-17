@@ -1,6 +1,6 @@
 from db import init_models
-
+import asyncio
 
 if __name__ == "__main__":
-    init_models()
+    asyncio.run(init_models())
     print("Done")
