@@ -1,4 +1,7 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI
+
+# from auth import fastapi_users
+# from auth import auth_backend
 from .product import product_router
 from .type_of_product import type_of_product_router
 from .product_image import product_image_router
@@ -11,7 +14,12 @@ tags_metadata = [
 ]
 
 app = FastAPI(swagger_ui_parameters={"syntaxHighlight.theme": "obsidian"}, openapi_tags=tags_metadata)
-
+# app.include_router(
+#     fastapi_users.get_auth_router(auth_backend),
+#     tags=["auth"],
+#     prefix="/auth/jwt",
+#
+# )
 app.include_router(product_router, prefix="/api/v1", tags=["product"])
 app.include_router(type_of_product_router, prefix="/api/v1", tags=["type_of_product"])
 app.include_router(product_image_router, prefix="/api/v1", tags=["product_image"])
