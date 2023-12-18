@@ -8,7 +8,7 @@ from pydantic import parse_obj_as
 from sqlalchemy import select
 from shema import ProductOrm
 from models import ProductModel, NewProductModel
-
+from sqlalchemy import delete, update
 
 async def get_all(session: AsyncSession) -> Sequence[ProductModel]:
     result = (await session.execute(select(ProductOrm).order_by(ProductOrm.name))).scalars().all()
@@ -20,8 +20,9 @@ async def get(session: AsyncSession, id) -> ProductModel:
     return parse_obj_as(ProductModel, product)
 
 
-async def delete(session: AsyncSession, id):
-    await session.delete((await session.execute(select(ProductOrm).where(ProductOrm.id == id))).scalar_one())
+async def delete_product(session: AsyncSession, id):
+    stmt = (delete(ProductOrm).where(ProductOrm.id == id))
+    await session.execute(stmt)
     await session.commit()
 
 
@@ -32,8 +33,8 @@ async def create(session: AsyncSession, model: NewProductModel) -> ProductModel:
     return parse_obj_as(ProductModel, new_product)
 
 
-async def update(session: AsyncSession, model: ProductModel) -> ProductModel | None:
-    product: ProductOrm = await session.query(ProductOrm).filter(ProductOrm.id == model.id).first()
+async def update_product(session: AsyncSession, model: ProductModel) -> ProductModel | None:
+    product = await session.get(ProductOrm, model.id)
     if not product:
         return None
     product.name = model.name
