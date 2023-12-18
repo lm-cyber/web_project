@@ -1,6 +1,5 @@
 from pydantic import BaseModel, ConfigDict, constr, conint
 
-
 class NewProductModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -11,3 +10,4 @@ class NewProductModel(BaseModel):
 
 class ProductModel(NewProductModel):
     id: int
+    images: list[int]

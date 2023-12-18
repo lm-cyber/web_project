@@ -1,12 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 
-# from auth import fastapi_users
-# from auth import auth_backend
+from shema import User
 from .product import product_router
 from .type_of_product import type_of_product_router
 from .product_image import product_image_router
 from .news_image import news_image_router
 from .news import news_router
+from auth import auth_jwt, auth_reg, auth_reset, auth_verify, auth_users, current_active_user
 
 tags_metadata = [
     {"name": "product"},
@@ -14,12 +14,38 @@ tags_metadata = [
 ]
 
 app = FastAPI(swagger_ui_parameters={"syntaxHighlight.theme": "obsidian"}, openapi_tags=tags_metadata)
-# app.include_router(
-#     fastapi_users.get_auth_router(auth_backend),
-#     tags=["auth"],
-#     prefix="/auth/jwt",
-#
-# )
+
+
+
+app.include_router(
+    auth_jwt, prefix="/auth/jwt", tags=["auth"]
+)
+app.include_router(
+    auth_reg,
+    prefix="/auth",
+    tags=["auth"],
+)
+app.include_router(
+    auth_reset,
+    prefix="/auth",
+    tags=["auth"],
+)
+app.include_router(
+    auth_verify,
+    prefix="/auth",
+    tags=["auth"],
+)
+app.include_router(
+    auth_users,
+    prefix="/users",
+    tags=["users"],
+)
+
+
+@app.get("/authenticated-route")
+async def authenticated_route(user: User = Depends(current_active_user)):
+    return {"message": f"Hello {user.email}!"}
+
 app.include_router(product_router, prefix="/api/v1", tags=["product"])
 app.include_router(type_of_product_router, prefix="/api/v1", tags=["type_of_product"])
 app.include_router(product_image_router, prefix="/api/v1", tags=["product_image"])

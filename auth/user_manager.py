@@ -5,8 +5,8 @@ from fastapi import Depends, Request
 from fastapi_users import BaseUserManager, UUIDIDMixin
 
 from .db import User, get_user_db
-
 from config import SECRET
+
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     reset_password_token_secret = SECRET
@@ -28,4 +28,3 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
 
 async def get_user_manager(user_db=Depends(get_user_db)):
     yield UserManager(user_db)
-

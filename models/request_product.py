@@ -1,15 +1,15 @@
-from pydantic import BaseModel, ConfigDict, constr, datetime_parse, conint
+from pydantic import BaseModel, ConfigDict, constr, datetime_parse, conint, EmailStr
 
 
 class NewRequestProduct(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
-    name: constr(max_length=64)
-    surname: constr(max_length=64)
-    patronymic: constr(max_length=64)
+    fio: constr(max_length=300)
+    phone: constr(max_length=30)
     company: constr(max_length=128)
-    email: constr(max_length=128)
+    email: EmailStr
     under_request: constr(max_length=1024)
+    product_ids: list[int]
 
 
 class RequestProduct(NewRequestProduct):

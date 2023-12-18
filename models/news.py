@@ -1,6 +1,5 @@
 from pydantic import BaseModel, ConfigDict, constr, conint
 
-
 class NewNewsModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -10,3 +9,4 @@ class NewNewsModel(BaseModel):
 
 class NewsModel(NewNewsModel):
     id: int
+    # images: list[int]
