@@ -8,22 +8,24 @@ from crud import product_image_crud
 from db import get_async_session
 from models import NewProductImageModel, ProductImageModel, ImageByProductId
 from fastapi import File
+from shema import User
+from auth import current_active_user
 
 product_image_router = APIRouter(tags=["product_image"])
 
 
 @product_image_router.post("/image/")
-async def add_image(product_id: int, file_bytes: bytes = File(), session: AsyncSession = Depends(get_async_session)):
+async def add_image(product_id: int, file_bytes: bytes = File(), session: AsyncSession = Depends(get_async_session), user: User = Depends(current_active_user)):
     return await product_image_crud.create(session, product_id, file_bytes)
 
 
 @product_image_router.delete("/image/{id}")
-async def delete_image(id: int, session: AsyncSession = Depends(get_async_session)):
+async def delete_image(id: int, session: AsyncSession = Depends(get_async_session), user: User = Depends(current_active_user)):
     return await product_image_crud.delete_product_image(session, id)
 
 
 @product_image_router.put("/image/")
-async def update_image(id: int, file_bytes: bytes = File(), session: AsyncSession = Depends(get_async_session)):
+async def update_image(id: int, file_bytes: bytes = File(), session: AsyncSession = Depends(get_async_session), user: User = Depends(current_active_user)):
     return await product_image_crud.update_product_image(session, id, file_bytes)
 
 

@@ -44,10 +44,7 @@ app.include_router(
 
 @app.get("/authenticated-route")
 async def authenticated_route(user: User = Depends(current_active_user)):
-    if user:
         return {"message": f"Hello {user.email}!"}
-    else:
-        return {"message": "Hello anonymous!"}
 
 app.include_router(product_router, prefix="/api/v1", tags=["product"])
 app.include_router(type_of_product_router, prefix="/api/v1", tags=["type_of_product"])
