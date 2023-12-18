@@ -8,6 +8,12 @@ class NewProductModel(BaseModel):
     description: constr(max_length=1024)
 
 
+class Image(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+
+
 class ProductModel(NewProductModel):
     id: int
-    images: list[int]
+    images: list[Image]
+

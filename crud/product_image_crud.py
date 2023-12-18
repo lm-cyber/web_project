@@ -15,9 +15,6 @@ async def get(session: AsyncSession, id) -> ProductImageModel:
     return ProductImageModel(id=result.id, product_id=result.product_id, image=result.image)
 
 
-async def get_image_id_by_product_id(session: AsyncSession, id):
-    result = (await session.execute(select(ProductImageOrm.id).filter(ProductImageOrm.product_id == id))).scalars().all()
-    return result
 
 
 async def delete_product_image(session: AsyncSession, id):

@@ -30,7 +30,3 @@ async def get_image(id: int = None, session: AsyncSession = Depends(get_async_se
     image_bytes = (await news_image_crud.get(session, id)).image
     return Response(content=image_bytes, media_type="image/png")
 
-
-@news_image_router.get("/image_id_by_news_id/{id}")
-async def get_image_id_by_news_id(id: int, session: AsyncSession = Depends(get_async_session)):
-    return await news_image_crud.get_image_id_by_news_id(session, id)

@@ -5,17 +5,14 @@ import base64
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, delete
 from shema import NewsImageOrm
-from models import NewsImageModel
+from models import NewsImageModel, NewNewsImageModel
 
 
-async def get(session: AsyncSession, id) -> NewsImageModel:
+async def get(session: AsyncSession, id) ->NewsImageOrm:
     result = (await session.execute(select(NewsImageOrm).where(NewsImageOrm.id == id))).scalar_one_or_none()
     return NewsImageOrm(id=result.id, news_id=result.news_id, image=result.image)
 
 
-async def get_image_id_by_news_id(session: AsyncSession, id):
-    result = (await session.execute(select(NewsImageOrm.id).filter(NewsImageOrm.product_id == id))).scalars().all()
-    return list(map(lambda x: x[0], result))
 
 
 async def delete_news_image(session: AsyncSession, id):

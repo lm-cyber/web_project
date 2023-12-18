@@ -7,6 +7,11 @@ class NewNewsModel(BaseModel):
     description: constr(max_length=1024)
 
 
-class NewsModel(NewNewsModel):
+class Image(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: int
-    # images: list[int]
+
+class NewsAdded(NewNewsModel):
+    id: int
+class NewsModel(NewsAdded):
+    images: list[Image]
