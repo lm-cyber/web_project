@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends
+from starlette.responses import HTMLResponse
 
 from shema import User
 from .product import product_router
@@ -42,6 +43,10 @@ app.include_router(
     tags=["users"],
 )
 
+@app.get('/',response_class=HTMLResponse)
+async def root():
+    with open('frontend/index.html') as content:
+        return HTMLResponse(content=content.read(), media_type="text/html")
 
 @app.get("/authenticated-route")
 async def authenticated_route(user: User = Depends(current_superuser_user)):
