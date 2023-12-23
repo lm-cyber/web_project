@@ -16,9 +16,7 @@ async def get_all(session: AsyncSession) -> Sequence[NewsModel]:
     result = (await session.execute(select(NewsOrm).options(joinedload(NewsOrm.images).load_only(NewsImageOrm.id))))
     result = result.unique().scalars().all()
     return parse_obj_as(Sequence[NewsModel], result)
-async def get(session: AsyncSession, id) -> NewsModel:
-    product = (await session.execute(select(NewsOrm).where(NewsOrm.id == id))).scalar_one_or_none()
-    return parse_obj_as(NewsModel, product)
+
 
 async def get(session: AsyncSession, id) -> NewsModel:
     result = (await session.execute(select(NewsOrm).options(joinedload(NewsOrm.images).load_only(NewsImageOrm.id)).filter(NewsOrm.id == id)))

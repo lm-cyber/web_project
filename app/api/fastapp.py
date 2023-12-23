@@ -6,7 +6,8 @@ from .type_of_product import type_of_product_router
 from .product_image import product_image_router
 from .news_image import news_image_router
 from .news import news_router
-from auth import auth_jwt, auth_reg, auth_reset, auth_verify, auth_users, current_active_user
+from .update_to_superuser import update_superuser_router
+from auth import auth_jwt, auth_reg, auth_reset, auth_verify, auth_users, current_superuser_user
 
 tags_metadata = [
     {"name": "product"},
@@ -43,9 +44,10 @@ app.include_router(
 
 
 @app.get("/authenticated-route")
-async def authenticated_route(user: User = Depends(current_active_user)):
+async def authenticated_route(user: User = Depends(current_superuser_user)):
         return {"message": f"Hello {user.email}!"}
 
+app.include_router(update_superuser_router, prefix="/users", tags=["update_to_superuser"])
 app.include_router(product_router, prefix="/api/v1", tags=["product"])
 app.include_router(type_of_product_router, prefix="/api/v1", tags=["type_of_product"])
 app.include_router(product_image_router, prefix="/api/v1", tags=["product_image"])

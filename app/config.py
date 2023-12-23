@@ -7,7 +7,7 @@ import os
 # DB_USER = os.environ.get("DB_USER")
 # DB_PASS = os.environ.get("DB_PASS")
 # SECRET = os.environ.get("SECRET")
-
+# PASS_HASH_SUPERUSER = os.environ.get("PASS_HASH_SUPERUSER")
 
 
 SECRET ="""
@@ -31,3 +31,4 @@ DB_PORT = 5432
 DB_NAME = "docker"
 DB_USER = "docker"
 DB_PASS = "docker"
+PASS_HASH_SUPERUSER = "scrypt:32768:8:1$dpr1392m2tJy8Y1J$2c6d78e7e42233922cf5c99005fc4d23a6d472c05f07c8a3fc56b4473bc10ff66e588d189dc05e87355fd5afc369e5f04b72b443ca7553f66db4ec24c56b13b0"

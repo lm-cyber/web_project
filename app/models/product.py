@@ -12,8 +12,8 @@ class Image(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
 
-
-class ProductModel(NewProductModel):
+class CreatedProduct(NewProductModel):
     id: int
+class ProductModel(CreatedProduct):
     images: list[Image]
 

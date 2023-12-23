@@ -13,7 +13,9 @@ class RequestOrm(Base):
     email = Column(String(128))
     under_request = Column(Text)
     datetime = Column(DateTime)
-    # request_product = relationship(
-    #     "RequestProductOrm",
-    #     back_populates="request",
-    # )
+    request_product = relationship(
+        "RequestProductOrm",
+        back_populates="request",
+        cascade="all,delete-orphan",
+        lazy="selectin"
+    )

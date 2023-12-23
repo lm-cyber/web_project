@@ -1,4 +1,4 @@
-from .product import ProductModel, NewProductModel
+from .product import ProductModel, NewProductModel, CreatedProduct
 from .type_of_product import TypeOfProductModel, NewTypeOfProductModel
 from .product_image import NewProductImageModel, ProductImageModel, ImageByProductId
 from .news import NewsModel, NewNewsModel, NewsAdded
