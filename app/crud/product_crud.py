@@ -6,18 +6,18 @@ from sqlalchemy.orm import Session, joinedload
 
 from pydantic import parse_obj_as
 from sqlalchemy import select
-from shema import ProductOrm
-from models import ProductModel, NewProductModel, ProductImageModel,CreatedProduct
+from shema import ProductOrm, ProductImageOrm
+from models import ProductModel, NewProductModel,AddedProduct
 from sqlalchemy import delete, update
 
 
 
 async def get_all(session: AsyncSession) -> Sequence[ProductModel]:
-    result = (await session.execute(select(ProductOrm).options(joinedload(ProductOrm.images).load_only(ProductImageModel.id))))
+    result = (await session.execute(select(ProductOrm).options(joinedload(ProductOrm.images).load_only(ProductImageOrm.id))))
     result = result.unique().scalars().all()
     return parse_obj_as(Sequence[ProductModel], result)
 async def get(session: AsyncSession, id) -> ProductModel:
-    result = (await session.execute(select(ProductOrm).options(joinedload(ProductOrm.images).load_only(ProductImageModel.id)).filter(ProductOrm.id == id)))
+    result = (await session.execute(select(ProductOrm).options(joinedload(ProductOrm.images).load_only(ProductImageOrm.id)).filter(ProductOrm.id == id)))
     result = result.unique().scalar_one_or_none()
     return parse_obj_as(ProductModel, result)
 async def delete_product(session: AsyncSession, id):
@@ -30,10 +30,10 @@ async def create(session: AsyncSession, model: NewProductModel) -> ProductModel:
     new_product = ProductOrm(name=model.name, type_of_product_id=model.type_of_product_id, description=model.description)
     session.add(new_product)
     await session.commit()
-    return parse_obj_as(CreatedProduct, new_product)
+    return parse_obj_as(AddedProduct, new_product)
 
 
-async def update_product(session: AsyncSession, model: ProductModel) -> ProductModel | None:
+async def update_product(session: AsyncSession, model: AddedProduct) -> AddedProduct | None:
     product = await session.get(ProductOrm, model.id)
     if not product:
         return None
@@ -41,4 +41,4 @@ async def update_product(session: AsyncSession, model: ProductModel) -> ProductM
     product.type_of_product_id = model.type_of_product_id
     product.description = model.description
     await session.commit()
-    return parse_obj_as(CreatedProduct, product)
+    return parse_obj_as(AddedProduct, product)
