@@ -9,13 +9,19 @@ from .news import news_router
 from .update_to_superuser import update_superuser_router
 from .request_for_product import request_for_product_router
 from auth import auth_jwt, auth_reg, auth_reset, auth_verify, auth_users
-
+from db.db_connection import init_models
 tags_metadata = [
     {"name": "product"},
     {"name": "type_of_product"},
 ]
 
 app = FastAPI(swagger_ui_parameters={"syntaxHighlight.theme": "obsidian"}, openapi_tags=tags_metadata)
+
+
+@app.on_event("startup")
+async def startup_event():
+    await init_models()
+
 
 
 app.include_router(auth_jwt, prefix="/auth/jwt", tags=["auth"])

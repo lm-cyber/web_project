@@ -2,25 +2,32 @@ version: '3.8'
 
 services:
   app:
+    env_file: .env
     build:
       context: .
       dockerfile: Dockerfile
+    links:
+      - db
+
+    #    restart: always
     ports:
       - "8000:8000"
-    environment:
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
-      - SECRET=${SECRET}
-      - PASS_HASH_SUPERUSER=${PASS_HASH_SUPERUSER}
+#    environment:
+#      - DB_HOST=db
+#      - DB_PORT=5432
+#      - DB_NAME=${DB_NAME}
+#      - DB_USER=${DB_USER}
+#      - DB_PASS=${DB_PASS}
+#      - SECRET=${SECRET}
+#      - PASS_HASH_SUPERUSER=${PASS_HASH_SUPERUSER}
     depends_on:
       - db
 
   db:
     image: postgres:latest
-    environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASS}
+    restart: always
+    env_file: .env
+#    environment:
+#      POSTGRES_DB: ${DB_NAME}
+#      POSTGRES_USER: ${DB_USER}
+#      POSTGRES_PASSWORD: ${DB_PASS}
