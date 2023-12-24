@@ -1,7 +1,8 @@
 from .base import Base
 from sqlalchemy import Column, Integer, String, Sequence, ForeignKey, Text, DateTime
 from sqlalchemy.orm import relationship, Mapped
-from .request_product import RequestProductOrm
+from datetime import datetime
+
 
 class RequestOrm(Base):
     __tablename__ = "request"
@@ -11,11 +12,6 @@ class RequestOrm(Base):
     phone = Column(String(30))
     company = Column(String(128))
     email = Column(String(128))
-    under_request = Column(Text)
-    datetime = Column(DateTime)
-    # request_product = relationship(
-    #     "RequestProductOrm",
-    #     back_populates="request",
-    #     cascade="all,delete-orphan",
-    #     lazy="selectin"
-    # )
+    description_by_customer = Column(Text)
+    datetime = Column(DateTime, default=datetime.now)
+    request_product = relationship("RequestProductOrm", back_populates="request", lazy="selectin")

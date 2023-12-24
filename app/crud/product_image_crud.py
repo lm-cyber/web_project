@@ -15,10 +15,8 @@ async def get(session: AsyncSession, id) -> ProductImageModel:
     return ProductImageModel(id=result.id, product_id=result.product_id, image=result.image)
 
 
-
-
 async def delete_product_image(session: AsyncSession, id):
-    stmt = (delete(ProductImageOrm).where(ProductImageOrm.id == id))
+    stmt = delete(ProductImageOrm).where(ProductImageOrm.id == id)
     await session.execute(stmt)
     await session.commit()
 
@@ -28,6 +26,7 @@ async def create(session: AsyncSession, id: int, image: bytes):
     session.add(new_image)
     await session.commit()
     return {"id": new_image.id, "product_id": new_image.product_id}
+
 
 async def update_product_image(session: AsyncSession, id: int, image: bytes) -> ProductImageModel | None:
     image_product = await session.get(ProductImageOrm, id)

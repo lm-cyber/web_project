@@ -8,15 +8,13 @@ from shema import NewsImageOrm
 from models import NewsImageModel, NewNewsImageModel
 
 
-async def get(session: AsyncSession, id) ->NewsImageOrm:
+async def get(session: AsyncSession, id) -> NewsImageOrm:
     result = (await session.execute(select(NewsImageOrm).where(NewsImageOrm.id == id))).scalar_one_or_none()
     return NewsImageOrm(id=result.id, news_id=result.news_id, image=result.image)
 
 
-
-
 async def delete_news_image(session: AsyncSession, id):
-    stmt = (delete(NewsImageOrm).where(NewsImageOrm.id == id))
+    stmt = delete(NewsImageOrm).where(NewsImageOrm.id == id)
     await session.execute(stmt)
     await session.commit()
 

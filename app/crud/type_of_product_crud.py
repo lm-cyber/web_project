@@ -5,11 +5,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Session
 
 from pydantic import parse_obj_as
-from sqlalchemy import select
 from shema import TypeOfProductOrm
 from models import TypeOfProductModel, NewTypeOfProductModel
-from sqlalchemy import select, delete, update
-
+from sqlalchemy import select, delete
 
 
 async def get_all(session: AsyncSession) -> Sequence[TypeOfProductModel]:
@@ -25,7 +23,7 @@ async def get(session: AsyncSession, id) -> TypeOfProductModel | None:
 
 
 async def delete_type_of_product(session: AsyncSession, id):
-    stmt = (delete(TypeOfProductOrm).where(TypeOfProductOrm.id == id))
+    stmt = delete(TypeOfProductOrm).where(TypeOfProductOrm.id == id)
     await session.execute(stmt)
     await session.commit()
 

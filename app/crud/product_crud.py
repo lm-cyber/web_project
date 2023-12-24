@@ -7,21 +7,30 @@ from sqlalchemy.orm import Session, joinedload
 from pydantic import parse_obj_as
 from sqlalchemy import select
 from shema import ProductOrm, ProductImageOrm
-from models import ProductModel, NewProductModel,AddedProduct
+from models import ProductModel, NewProductModel, AddedProduct
 from sqlalchemy import delete, update
 
 
-
 async def get_all(session: AsyncSession) -> Sequence[ProductModel]:
-    result = (await session.execute(select(ProductOrm).options(joinedload(ProductOrm.images).load_only(ProductImageOrm.id))))
+    result = await session.execute(
+        select(ProductOrm).options(joinedload(ProductOrm.images).load_only(ProductImageOrm.id))
+    )
     result = result.unique().scalars().all()
     return parse_obj_as(Sequence[ProductModel], result)
+
+
 async def get(session: AsyncSession, id) -> ProductModel:
-    result = (await session.execute(select(ProductOrm).options(joinedload(ProductOrm.images).load_only(ProductImageOrm.id)).filter(ProductOrm.id == id)))
+    result = await session.execute(
+        select(ProductOrm)
+        .options(joinedload(ProductOrm.images).load_only(ProductImageOrm.id))
+        .filter(ProductOrm.id == id)
+    )
     result = result.unique().scalar_one_or_none()
     return parse_obj_as(ProductModel, result)
+
+
 async def delete_product(session: AsyncSession, id):
-    stmt = (delete(ProductOrm).where(ProductOrm.id == id))
+    stmt = delete(ProductOrm).where(ProductOrm.id == id)
     await session.execute(stmt)
     await session.commit()
 

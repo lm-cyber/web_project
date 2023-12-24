@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from sqlalchemy import Column, Integer, String, Sequence, ForeignKey, Text
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Mapped
 
 from .base import Base
 
@@ -14,3 +14,5 @@ class ProductOrm(Base):
     description = Column(Text)
     images = relationship("ProductImageOrm", backref="product", cascade="all,delete-orphan", lazy="selectin")
     type_of_product_id = Column(Integer, ForeignKey("type_of_product.id"), nullable=False)
+
+    request_product = relationship("RequestProductOrm", back_populates="product")

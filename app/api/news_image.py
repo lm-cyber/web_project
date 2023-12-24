@@ -13,17 +13,29 @@ news_image_router = APIRouter(tags=["news_image"])
 
 
 @news_image_router.post("/news_image/")
-async def add_image(news_id: int, file_bytes: bytes = File(), session: AsyncSession = Depends(get_async_session), user: User = Depends(current_superuser_user)):
+async def add_image(
+    news_id: int,
+    file_bytes: bytes = File(),
+    session: AsyncSession = Depends(get_async_session),
+    user: User = Depends(current_superuser_user),
+):
     return await news_image_crud.create(session, news_id, file_bytes)
 
 
 @news_image_router.delete("/news_image/{id}")
-async def delete_image(id: int, session: AsyncSession = Depends(get_async_session), user: User = Depends(current_superuser_user)):
+async def delete_image(
+    id: int, session: AsyncSession = Depends(get_async_session), user: User = Depends(current_superuser_user)
+):
     return await news_image_crud.delete_news_image(session, id)
 
 
 @news_image_router.put("/news_image/")
-async def update_image(id: int, file_bytes: bytes = File(), session: AsyncSession = Depends(get_async_session), user: User = Depends(current_superuser_user)):
+async def update_image(
+    id: int,
+    file_bytes: bytes = File(),
+    session: AsyncSession = Depends(get_async_session),
+    user: User = Depends(current_superuser_user),
+):
     return await news_image_crud.update(session, id, file_bytes)
 
 
@@ -31,4 +43,3 @@ async def update_image(id: int, file_bytes: bytes = File(), session: AsyncSessio
 async def get_image(id: int = None, session: AsyncSession = Depends(get_async_session)):
     image_bytes = (await news_image_crud.get(session, id)).image
     return Response(content=image_bytes, media_type="image/png")
-

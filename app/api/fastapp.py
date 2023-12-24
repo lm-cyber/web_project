@@ -7,6 +7,7 @@ from .product_image import product_image_router
 from .news_image import news_image_router
 from .news import news_router
 from .update_to_superuser import update_superuser_router
+from .request_for_product import request_for_product_router
 from auth import auth_jwt, auth_reg, auth_reset, auth_verify, auth_users
 
 tags_metadata = [
@@ -17,10 +18,7 @@ tags_metadata = [
 app = FastAPI(swagger_ui_parameters={"syntaxHighlight.theme": "obsidian"}, openapi_tags=tags_metadata)
 
 
-
-app.include_router(
-    auth_jwt, prefix="/auth/jwt", tags=["auth"]
-)
+app.include_router(auth_jwt, prefix="/auth/jwt", tags=["auth"])
 app.include_router(
     auth_reg,
     prefix="/auth",
@@ -42,13 +40,15 @@ app.include_router(
     tags=["users"],
 )
 
-@app.get('/',response_class=HTMLResponse)
+
+@app.get("/", response_class=HTMLResponse)
 async def root():
-    with open('frontend/index.html') as content:
+    with open("frontend/index.html") as content:
         return HTMLResponse(content=content.read(), media_type="text/html")
 
 
-app.include_router(update_superuser_router, prefix="/users", tags=["update_to_superuser"])
+app.include_router(request_for_product_router, prefix="/api/v1", tags=["request_for_product"])
+app.include_router(update_superuser_router, prefix="/users", tags=["users"])
 app.include_router(product_router, prefix="/api/v1", tags=["product"])
 app.include_router(type_of_product_router, prefix="/api/v1", tags=["type_of_product"])
 app.include_router(product_image_router, prefix="/api/v1", tags=["product_image"])
