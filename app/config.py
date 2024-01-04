@@ -26,7 +26,7 @@ oLBSVUzj0VR+wlBwmTNbt+aWZXsrWSAEtd0CdD7Bvu+pwDyoCmWkoQJBAMk0VMPS
 vxu4PYwHiNVTkIL73MJFIZy2K5gjXu55WTa00EHzFMmuuhurYYiyFiR3shIJYpRX
 uzfbPUkAUaseWB0=
 """
-DB_HOST = "db"
+DB_HOST = "localhost"
 DB_PORT = 5432
 DB_NAME = "docker"
 DB_USER = "docker"

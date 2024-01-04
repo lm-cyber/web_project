@@ -9,6 +9,7 @@ from .news import news_router
 from .update_to_superuser import update_superuser_router
 from .request_for_product import request_for_product_router
 from auth import auth_jwt, auth_reg, auth_reset, auth_verify, auth_users
+from minio_router import minio_router
 from db.db_connection import init_models
 tags_metadata = [
     {"name": "product"},
@@ -17,10 +18,28 @@ tags_metadata = [
 
 app = FastAPI(swagger_ui_parameters={"syntaxHighlight.theme": "obsidian"}, openapi_tags=tags_metadata)
 
+from fastapi.middleware.cors import CORSMiddleware
 
-@app.on_event("startup")
-async def startup_event():
-    await init_models()
+app = FastAPI()
+
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# @app.on_event("startup")
+# async def startup_event():
+#     await init_models()
 
 
 
@@ -45,7 +64,11 @@ app.include_router(
     prefix="/users",
     tags=["users"],
 )
-
+app.include_router(
+    minio_router,
+    prefix="/minio",
+    tags=["minio"],
+)
 
 @app.get("/", response_class=HTMLResponse)
 async def root():

@@ -2,3 +2,17 @@
 sudo docker run -d -p 5432:5432  test_postgress
 
 sudo docker build -t test_postgress .
+
+
+
+sudo docker run \
+   -p 9000:9000 \
+   -p 9001:9001 \
+   --name minio \
+   -v ~/minio/data:/data \
+   -e "MINIO_ROOT_USER=ROOTNAME" \
+   -e "MINIO_ROOT_PASSWORD=CHANGEME123" \
+   -e "MINIO_ACCESS_KEY=Q3AM3UQ867SPQQA43P2F" \
+   -e "MINIO_SECRET_KEY=zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG" \
+   quay.io/minio/minio server /data --console-address ":9001"
+
