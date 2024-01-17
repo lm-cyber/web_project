@@ -1,5 +1,6 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, APIRouter
 from starlette.responses import HTMLResponse
+from starlette.staticfiles import StaticFiles
 
 from .product import product_router
 from .type_of_product import type_of_product_router
@@ -11,6 +12,7 @@ from .request_for_product import request_for_product_router
 from auth import auth_jwt, auth_reg, auth_reset, auth_verify, auth_users
 from minio_router import minio_router
 from db.db_connection import init_models
+from fastapi.middleware.cors import CORSMiddleware
 tags_metadata = [
     {"name": "product"},
     {"name": "type_of_product"},
@@ -18,15 +20,13 @@ tags_metadata = [
 
 app = FastAPI(swagger_ui_parameters={"syntaxHighlight.theme": "obsidian"}, openapi_tags=tags_metadata)
 
-from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
 
 origins = [
-    "http://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:8080",
+    "https://localhost",
+    "https://localhost:8080",
 ]
 
 app.add_middleware(
@@ -37,10 +37,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# @app.on_event("startup")
-# async def startup_event():
-#     await init_models()
+@app.on_event("startup")
+async def startup_event():
+    await init_models()
 
+
+api_v1 = APIRouter()
+
+
+api_v1.include_router(request_for_product_router, prefix="/api/v1", tags=["request_for_product"])
+api_v1.include_router(update_superuser_router, prefix="/users", tags=["users"])
+api_v1.include_router(product_router, prefix="/api/v1", tags=["product"])
+api_v1.include_router(type_of_product_router, prefix="/api/v1", tags=["type_of_product"])
+api_v1.include_router(product_image_router, prefix="/api/v1", tags=["product_image"])
+api_v1.include_router(news_image_router, prefix="/api/v1", tags=["news_image"])
+api_v1.include_router(news_router, prefix="/api/v1", tags=["news"])
 
 
 app.include_router(auth_jwt, prefix="/auth/jwt", tags=["auth"])
@@ -69,17 +80,8 @@ app.include_router(
     prefix="/minio",
     tags=["minio"],
 )
+app.include_router(api_v1)
+app.mount("/api",api_v1)
 
-@app.get("/", response_class=HTMLResponse)
-async def root():
-    with open("frontend/index.html") as content:
-        return HTMLResponse(content=content.read(), media_type="text/html")
+app.mount("/static", StaticFiles(directory="frontend", html=True), name="static")
 
-
-app.include_router(request_for_product_router, prefix="/api/v1", tags=["request_for_product"])
-app.include_router(update_superuser_router, prefix="/users", tags=["users"])
-app.include_router(product_router, prefix="/api/v1", tags=["product"])
-app.include_router(type_of_product_router, prefix="/api/v1", tags=["type_of_product"])
-app.include_router(product_image_router, prefix="/api/v1", tags=["product_image"])
-app.include_router(news_image_router, prefix="/api/v1", tags=["news_image"])
-app.include_router(news_router, prefix="/api/v1", tags=["news"])
