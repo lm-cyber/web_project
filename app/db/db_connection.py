@@ -1,6 +1,7 @@
 from typing import Generator, AsyncGenerator
 
-from sqlalchemy import Engine, inspect
+from fast_autocomplete import AutoComplete
+from sqlalchemy import Engine, inspect, text
 from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import sessionmaker
@@ -29,9 +30,16 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
 
 
 async def init_models():
+
     async with engine.begin() as conn:
 
+        await conn.execute(text("CREATE EXTENSION IF NOT EXISTS pg_trgm;"))
         await conn.run_sync(Base.metadata.create_all)
+        session = get_async_session()
+
+
+
+
     #
     # async with engine.begin() as conn:
     #     inspector = inspect(engine)
