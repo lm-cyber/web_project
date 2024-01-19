@@ -1,11 +1,10 @@
 from pydantic import BaseModel, ConfigDict, constr, conint
 
 
-class NewNewsModel(BaseModel):
+class NewCertModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     name: constr(max_length=128)
-    description: constr(max_length=1024)
 
 
 class Image(BaseModel):
@@ -13,9 +12,9 @@ class Image(BaseModel):
     id: int
 
 
-class NewsAdded(NewNewsModel):
+class CertAdded(NewCertModel):
     id: int
 
 
-class NewsModel(NewsAdded):
+class CertModel(CertAdded):
     images: list[Image]

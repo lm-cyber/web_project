@@ -5,8 +5,8 @@ from starlette.staticfiles import StaticFiles
 from .product import product_router
 from .type_of_product import type_of_product_router
 from .product_image import product_image_router
-from .news_image import news_image_router
-from .news import news_router
+from .cert_image import cert_image_router
+from .cert import cert_router
 from .autocomplete import autocomplete_router
 from .update_to_superuser import update_superuser_router
 from .request_for_product import request_for_product_router
@@ -50,8 +50,8 @@ api_v1.include_router(update_superuser_router, prefix="/users", tags=["users"])
 api_v1.include_router(product_router, prefix="/api/v1", tags=["product"])
 api_v1.include_router(type_of_product_router, prefix="/api/v1", tags=["type_of_product"])
 api_v1.include_router(product_image_router, prefix="/api/v1", tags=["product_image"])
-api_v1.include_router(news_image_router, prefix="/api/v1", tags=["news_image"])
-api_v1.include_router(news_router, prefix="/api/v1", tags=["news"])
+api_v1.include_router(cert_image_router, prefix="/api/v1", tags=["cert_image"])
+api_v1.include_router(cert_router, prefix="/api/v1", tags=["cert"])
 
 
 app.include_router(auth_jwt, prefix="/auth/jwt", tags=["auth"])

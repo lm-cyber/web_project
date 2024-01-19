@@ -25,15 +25,16 @@ autocomplete_router = APIRouter(tags=["product"])
 async def get_product(word: str, session: AsyncSession = Depends(get_async_session)):
     async def create_autocomplete(data):
         import re
-        from collections import Counter
-        autocomplete_titles = {}
+        from collections import Counter, defaultdict
+        autocomplete_titles = defaultdict(lambda : {'count': 0})
         for row in data:
             words = row[0]+" "+row[1]
-            words = re.sub("[^а-яА-ЯЁё0-9a-zA-Z ]", "", words)
+            words = re.sub("[^а-яА-ЯЁё0-9a-zA-Z ]", " ", words)
             words = words.lower()
             words = words.strip().split()
-            cnt = dict(Counter(words))
-            autocomplete_titles = {key: {"count": value} for key, value in cnt.items() if key != ""}
+            cnt = Counter(words)
+            for key, value in cnt.items():
+                autocomplete_titles[key]['count'] += value
         autocomplete = AutoComplete(words=autocomplete_titles,
                                         valid_chars_for_string="абвгдеёжзийклмнопрстуфхцчшщьЪыэюя")
         return autocomplete
