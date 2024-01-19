@@ -13,13 +13,13 @@ from .request_for_product import request_for_product_router
 from auth import auth_jwt, auth_reg, auth_reset, auth_verify, auth_users
 from db.db_connection import init_models
 from fastapi.middleware.cors import CORSMiddleware
+
 tags_metadata = [
     {"name": "product"},
     {"name": "type_of_product"},
 ]
 
 app = FastAPI(swagger_ui_parameters={"syntaxHighlight.theme": "obsidian"}, openapi_tags=tags_metadata)
-
 
 
 origins = [
@@ -31,11 +31,12 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.on_event("startup")
 async def startup_event():
@@ -77,9 +78,6 @@ app.include_router(
 )
 
 app.include_router(api_v1)
-app.mount("/api",api_v1)
-import os
-print(os.getcwd())
-print(os.listdir())
-# app.mount("/static", StaticFiles(directory="frontend", html=True), name="static")
+app.mount("/api", api_v1)
 
+# app.mount("/static", StaticFiles(directory="frontend", html=True), name="static")

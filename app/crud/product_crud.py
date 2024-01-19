@@ -34,12 +34,14 @@ async def delete_product(session: AsyncSession, id):
     await session.execute(stmt)
     await session.commit()
 
+
 async def search(session: AsyncSession, term: str):
     search_query = "%" + term + "%"
-    stmt = (select(ProductOrm)
-            .options(joinedload(ProductOrm.images)
-                     .load_only(ProductImageOrm.id))
-            .filter(ProductOrm.name.like(search_query) | ProductOrm.description.like(search_query)))
+    stmt = (
+        select(ProductOrm)
+        .options(joinedload(ProductOrm.images).load_only(ProductImageOrm.id))
+        .filter(ProductOrm.name.like(search_query) | ProductOrm.description.like(search_query))
+    )
     results = (await session.execute(stmt)).unique().scalars().all()
     return parse_obj_as(Sequence[ProductModel], results)
 

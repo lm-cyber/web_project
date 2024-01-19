@@ -20,7 +20,7 @@ async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
 
 async def create_db_and_tablews():
     async with engine.begin() as conn:
-        if not engine.dialect.has_table(engine, 'users'):
+        if not engine.dialect.has_table(engine, "users"):
             await conn.run_sync(Base.metadata.create_all)
 
 
@@ -30,15 +30,9 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
 
 
 async def init_models():
-
     async with engine.begin() as conn:
-
         await conn.execute(text("CREATE EXTENSION IF NOT EXISTS pg_trgm;"))
         await conn.run_sync(Base.metadata.create_all)
-        session = get_async_session()
-
-
-
 
     #
     # async with engine.begin() as conn:
