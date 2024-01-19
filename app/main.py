@@ -7,6 +7,6 @@ if __name__ == "__main__":
     uvicorn.run(
         "main:app",
         reload=True,
-        ssl_keyfile="./keys_https/key.pem",
-        ssl_certfile="./keys_https/cert.pem"
+        # ssl_keyfile="./keys_https/key.pem",
+        # ssl_certfile="./keys_https/cert.pem"
     )

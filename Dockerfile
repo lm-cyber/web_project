@@ -2,9 +2,11 @@ FROM python:3.11
 
 WORKDIR /app
 COPY pyproject.toml /app/
-
+#COPY frontend /
+#COPY keys_https /
 RUN pip install poetry && poetry install
 COPY . /app
+
 RUN chmod u+x app/setup.py
 #RUN poetry run python app/setup.py
 
