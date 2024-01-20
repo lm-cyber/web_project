@@ -19,6 +19,11 @@ async def get_product(id: int, session: AsyncSession = Depends(get_async_session
     return await product_crud.get(session, id)
 
 
+@product_router.get("/product_by_type/{type_id}", response_model=list[ProductModel])
+async def get_product(type_id: int, session: AsyncSession = Depends(get_async_session)):
+    return await product_crud.get_type(session, type_id)
+
+
 @product_router.get("/product_search/{term}")
 async def get_search(term: str, session: AsyncSession = Depends(get_async_session)):
     return await product_crud.search(session, term)

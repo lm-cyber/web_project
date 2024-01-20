@@ -19,6 +19,16 @@ async def get_all(session: AsyncSession) -> Sequence[ProductModel]:
     return parse_obj_as(Sequence[ProductModel], result)
 
 
+async def get_type(session: AsyncSession, id_type) -> Sequence[ProductModel]:
+    result = await session.execute(
+        select(ProductOrm)
+        .options(joinedload(ProductOrm.images).load_only(ProductImageOrm.id))
+        .filter(ProductOrm.type_of_product_id == id_type)
+    )
+    result = result.unique().scalars().all()
+    return parse_obj_as(Sequence[ProductModel], result)
+
+
 async def get(session: AsyncSession, id) -> ProductModel:
     result = await session.execute(
         select(ProductOrm)
