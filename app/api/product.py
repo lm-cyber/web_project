@@ -14,7 +14,7 @@ from auth import current_superuser_user
 product_router = APIRouter(tags=["product"])
 
 
-@product_router.get("/product/{id}", response_model=ProductModel)
+@product_router.get("/product/{id}", response_model=list[ProductModel])
 async def get_product(id: int, session: AsyncSession = Depends(get_async_session)):
     return await product_crud.get(session, id)
 

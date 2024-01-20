@@ -36,7 +36,7 @@ async def get(session: AsyncSession, id) -> ProductModel:
         .filter(ProductOrm.id == id)
     )
     result = result.unique().scalar_one_or_none()
-    return parse_obj_as(ProductModel, result)
+    return parse_obj_as(Sequence[ProductModel], [result])
 
 
 async def delete_product(session: AsyncSession, id):
