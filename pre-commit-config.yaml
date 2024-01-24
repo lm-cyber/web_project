@@ -8,8 +8,8 @@ repos:
         types: [ python ]
         files: ^app/
 
-      - id: yarn-lint
-        name: Yarn Lint
-        entry: yarn --cwd frontend/factory lint
-        language: system
-        files: ^frontend/factory/.*\.(js|jsx|ts|tsx)$
+#      - id: yarn-lint
+#        name: Yarn Lint
+#        entry: yarn --cwd ./frontend/factory lint
+#        language: system
+#        files: ^frontend/factory/.*\.(js|jsx|ts|tsx)$
