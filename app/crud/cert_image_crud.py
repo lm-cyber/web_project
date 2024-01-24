@@ -10,7 +10,7 @@ from models import CertImageModel, NewCertImageModel
 
 async def get(session: AsyncSession, id) -> CertImageOrm:
     result = (await session.execute(select(CertImageOrm).where(CertImageOrm.id == id))).scalar_one_or_none()
-    return CertImageOrm(id=result.id, news_id=result.cert_id, image=result.image)
+    return CertImageOrm(id=result.id, cert_id=result.cert_id, image=result.image)
 
 
 async def delete_cert_image(session: AsyncSession, id):
@@ -20,16 +20,16 @@ async def delete_cert_image(session: AsyncSession, id):
 
 
 async def create(session: AsyncSession, id: int, image: bytes):
-    new_image = CertImageOrm(news_id=id, image=image)
+    new_image = CertImageOrm(cert_id=id, image=image)
     session.add(new_image)
     await session.commit()
-    return {"id": new_image.id, "news_id": new_image.cert_id}
+    return {"id": new_image.id, "cert_id": new_image.cert_id}
 
 
 async def update(session: AsyncSession, id: int, image: bytes):
-    news_image = await session.get(CertImageOrm, id)
-    if not news_image:
+    cert_image = await session.get(CertImageOrm, id)
+    if not cert_image:
         return None
-    news_image.image = image
+    cert_image.image = image
     await session.commit()
-    return {"id": news_image.id, "product_id": news_image.cert_id}
+    return {"id": cert_image.id, "product_id": cert_image.cert_id}

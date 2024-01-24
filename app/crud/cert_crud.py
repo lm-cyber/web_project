@@ -32,7 +32,7 @@ async def delete_news(session: AsyncSession, id):
 
 
 async def create(session: AsyncSession, model: NewCertModel) -> CertAdded:
-    news = CertOrm(name=model.name, description=model.description)
+    news = CertOrm(name=model.name)
     session.add(news)
     await session.commit()
     return parse_obj_as(CertAdded, news)
@@ -43,6 +43,5 @@ async def update(session: AsyncSession, model: NewCertModel) -> CertAdded | None
     if not news:
         return None
     news.name = model.name
-    news.description = model.description
     await session.commit()
     return parse_obj_as(CertAdded, news)
