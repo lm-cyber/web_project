@@ -1,0 +1,11 @@
+.catalog-item {
+    @apply w-[335px] h-[360px] grid gap-3 auto-rows-min cursor-pointer bg-lightGray rounded-[20px]
+}
+
+.title {
+    @apply text-[20px] font-medium text-start pl-2
+}
+
+.image {
+    @apply w-full h-[280px] rounded-t-[20px]
+}

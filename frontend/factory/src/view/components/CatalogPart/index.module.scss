@@ -1,0 +1,20 @@
+.wrapper {
+  @apply grid gap-8
+}
+
+.scrollable {
+  @apply flex overflow-x-scroll
+}
+
+.cards-wrapper {
+  @apply flex gap-7
+}
+
+.hide-scroll-bar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scroll-bar::-webkit-scrollbar {
+  display: none;
+}

@@ -80,4 +80,4 @@ app.include_router(
 app.include_router(api_v1)
 app.mount("/api", api_v1)
 
-# app.mount("/static", StaticFiles(directory="frontend", html=True), name="static")
+app.mount("/", StaticFiles(directory="frontend/factory/dist", html=True), name="static")

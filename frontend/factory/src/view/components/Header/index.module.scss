@@ -1,0 +1,16 @@
+.input {
+    @apply w-64 h-10 rounded-[20px] border-2 border-gray pl-5
+}
+
+.small_button {
+    @apply bg-lightGray hover:bg-gray p-3 rounded-full focus:outline-none
+  }
+
+  @keyframes colorChange {
+    0% {
+        @apply bg-lightGray /* Start color */
+    }
+    100% {
+        @apply bg-gray /* End color */
+    }
+  }
