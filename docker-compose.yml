@@ -3,9 +3,12 @@ version: '3.8'
 services:
   app:
     env_file: .env
+
+
     build:
       context: .
       dockerfile: Dockerfile
+
     links:
       - db
 
