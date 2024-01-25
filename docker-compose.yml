@@ -2,12 +2,14 @@ version: '3.8'
 
 services:
   app:
+
     env_file: .env
 
 
     build:
       context: .
       dockerfile: Dockerfile
+    image: lmcyber/web_project_itmo:app
 
     links:
       - db
