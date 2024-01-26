@@ -2,7 +2,7 @@ FROM python:3.11
 
 WORKDIR /app
 RUN mkdir frontend
-RUN git clone https://github.com/emshen6/web-project-front -b env frontend/factory
+RUN git clone https://github.com/emshen6/web-project-front  frontend/factory
 COPY frontend /app/frontend
 RUN apt-get update && apt-get install -y npm
 RUN npm install -g yarn
